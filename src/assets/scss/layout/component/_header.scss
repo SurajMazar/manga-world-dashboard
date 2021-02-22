@@ -1,0 +1,5 @@
+.mwd-header{
+  background-color: $bg-white;
+  color:$primary-color;
+  @include boxShadow(0,0,10px,$primary-color,0.5);
+}

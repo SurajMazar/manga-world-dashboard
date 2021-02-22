@@ -1,0 +1,13 @@
+body{
+  min-height: 100vh;
+  font-family: $font-family;
+  font-size:16px;
+}
+::selection {
+  color:$text-white;
+  background: $primary-color;
+}
+
+#root{
+  height:100%;
+}

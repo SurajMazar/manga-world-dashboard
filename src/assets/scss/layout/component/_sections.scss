@@ -1,0 +1,18 @@
+
+@for $i from 1 through 5{
+
+  .section-container-#{$i}{
+    padding: $i * 1em;
+    @include maxWidth(992px){
+      padding: $i * 0.5em;
+    }
+  }
+
+  .section-break-#{$i}{
+    padding: $i * 1em 0;
+    @include maxWidth(992px){
+      padding: $i * 0.5em 0;
+    }
+  }
+
+}

@@ -1,0 +1,62 @@
+@mixin DisplayFlex($direction:"row"){
+  display: flex;
+  flex-direction: $direction;
+  flex-wrap: wrap;
+}
+
+
+
+@mixin hideScrollbar {
+  // https://blogs.msdn.microsoft.com/kurlak/2013/11/03/hiding-vertical-scrollbars-with-pure-css-in-chrome-ie-6-firefox-opera-and-safari/
+  // There is a CSS rule that can hide scrollbars in Webkit-based browsers (Chrome and Safari).
+  &::-webkit-scrollbar {
+    width: 0 !important
+  }
+  // There is a CSS rule that can hide scrollbars in IE 10+.
+  -ms-overflow-style: none;
+  
+  // Use -ms-autohiding-scrollbar if you wish to display on hover.
+  // -ms-overflow-style: -ms-autohiding-scrollbar;
+  
+  // There used to be a CSS rule that could hide scrollbars in Firefox, but it has since been deprecated.
+  scrollbar-width: none;
+}
+
+/**
+max width responsive
+*/
+@mixin maxWidth($width){
+  @media screen and (max-width:$width) {
+    @content;
+  }
+}
+
+/**
+min width responsive
+*/
+@mixin minWidth($width){
+  @media screen and (min-width:$width) {
+    @content;
+  }
+}
+
+
+/*
+  max min width 
+*/
+@mixin maxminWidth($max,$min){
+  @media screen and (max-width: $max) and (min-width: $min) {
+    @content;
+  }
+}
+
+
+
+//3.Box Shadow 
+@mixin boxShadow($x,$y,$z,$color,$trans){
+  box-shadow:$x $y $z rgba($color,$trans);
+}
+
+.flex{
+  @include DisplayFlex("row")
+}

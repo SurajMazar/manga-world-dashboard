@@ -1,0 +1,45 @@
+.btn{
+  padding:0.5rem 1rem;
+  font-size: 1rem;
+  border-radius:1.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+
+.btn-mwd{
+  color:$text-white;
+  background-color: $primary-color;
+  border:none;
+  margin-right:0.5rem;
+  &:hover{
+    @include boxShadow(0,0,1rem,$primary-color-light,0.6);
+    text-shadow:0 0 2rem rgba($text-white,0.5);
+    .anticon{
+      transform:scale(1.1);
+      transition:all 0.3s ease-in-out;
+    }
+  }
+  .anticon{
+    margin-right: 0.5rem;
+  }
+
+  &--sm{
+    padding:0.3rem 0.6rem;
+    color:$text-white;
+    background-color: $primary-color;
+    border:none;
+    margin-right:0.5rem;
+    font-size: 0.9rem;
+    &:hover{
+      @include boxShadow(0,0,0.7rem,$primary-color-light,0.6);
+      text-shadow:0 0 2rem rgba($text-white,0.5);
+      .anticon{
+        animation:spin 1s ease;
+      }
+    }
+    .anticon{
+      margin-right: 0.3rem;
+    }
+  }
+}
