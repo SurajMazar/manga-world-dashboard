@@ -45,7 +45,11 @@ const LoginContainer:React.FC =  props =>{
             >
             <Form.Item
               name="email"
-              rules={[{ required: true, message: 'Please input your username!' ,type:'email'}]}
+              rules={
+                [
+                  { required: true, message: 'Please input your username!' },
+                  {type:'email',message:"Please enter a valid email"}
+                ]}
             >
               <Input
               placeholder="Email"

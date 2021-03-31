@@ -20,7 +20,7 @@ export const login = (formData:FormData)=> {
   return async (dispatch:Dispatch) =>{
     dispatch(loginRequest());
     try{
-      const response = await basehttp().post('api/auth/login',formData);
+      const response = await basehttp().post('api/administration/auth/login',formData);
       const data = response.data?.data;
   
       const {role,name:username} = data?.user;
@@ -52,7 +52,7 @@ export const fetchAuthProfile = () =>{
   return async(dispatch:Dispatch)=>{
     dispatch(fetchProfileRequest());
     try{
-      const response = await basehttp().get('api/auth/profile');
+      const response = await basehttp().get('api/administration/auth/profile');
       const data = response?.data?.data?.profile;
       dispatch(fetchProfileSuccess(data));
     }catch(e){
