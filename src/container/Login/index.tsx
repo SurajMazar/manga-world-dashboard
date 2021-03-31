@@ -1,13 +1,35 @@
-import React from 'react'
-import {Row,Col,Form,Input,Checkbox} from 'antd'
-// import {} from '@ant-design/icons'
-import {useHistory} from 'react-router-dom'
+import React, { useCallback } from 'react';
+import {Row,Col,Form,Input} from 'antd';
+import {useDispatch,useSelector} from 'react-redux';
+import {login as storeLogin} from '../../store/services/authService';
+import Button from '../../components/common/buttons/LoadingButton';
+
+interface state {
+  auth:{
+    authLoading:boolean
+  }
+}
 
 const LoginContainer:React.FC =  props =>{
-  let history = useHistory()
 
-  const login = ()=>{
-    history.push('/')
+  const dispatch = useDispatch();
+
+
+  const Login = useCallback((formData:FormData)=>{
+    dispatch(storeLogin(formData))
+  },[dispatch]);
+
+  const authLoading = useSelector((state:state)=>state.auth.authLoading);
+  interface loginForm{
+    email:string,
+    password:string
+  }
+
+  const login = (values:loginForm)=>{
+    let formData = new FormData();
+    formData.append('email',values.email);
+    formData.append('password',values.password);
+    Login(formData);
   }
 
   
@@ -22,7 +44,7 @@ const LoginContainer:React.FC =  props =>{
               // onFinishFailed={onFinishFailed}
             >
             <Form.Item
-              name="username"
+              name="email"
               rules={[{ required: true, message: 'Please input your username!' }]}
             >
               <Input
@@ -39,13 +61,7 @@ const LoginContainer:React.FC =  props =>{
               />
             </Form.Item>
 
-            <Form.Item name="remember" valuePropName="checked">
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
-
-            <button className="btn btn-mwd" type="submit">
-              Login
-            </button>
+            <Button title={'Login'} loading={authLoading}/>
           </Form>
         </div>
       </Col>

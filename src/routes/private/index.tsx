@@ -1,11 +1,19 @@
-import React from 'react'
-import {Route} from 'react-router-dom'
+import React from 'react';
+import {Route} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 
 interface PLinterface{
   layout:React.FC,
   component:any,
   path:string,
   exact:any,
+}
+
+interface state{
+  auth:{
+    authenticated:boolean
+  }
 }
 
 const PrivateLayout:React.FC<PLinterface> = props =>{
@@ -17,12 +25,21 @@ const PrivateLayout:React.FC<PLinterface> = props =>{
     exact
   } = props
 
+  const authenticated = useSelector((state:state)=>state.auth.authenticated)
+
   return(
     <>
     <Route path={path} {...exact} render={()=>(
-      <Layout>
+      <>
+      {authenticated?
+        <Layout>
         <RouterComponent/>
-      </Layout>
+        </Layout>
+      :
+      <Redirect to='/login'/>
+      }
+      
+      </>
     )}/>
     </>
   )

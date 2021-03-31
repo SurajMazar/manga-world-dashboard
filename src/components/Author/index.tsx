@@ -1,16 +1,17 @@
-import React from 'react'
-import {Row} from 'antd'
+import React from 'react';
+import {Row} from 'antd';
 import {
   PlusCircleOutlined,
   ClearOutlined,
   EditOutlined
-} from '@ant-design/icons'
+} from '@ant-design/icons';
 
 const Author:React.FC = props =>{
+
   return(
     <section className="section-container-2">
       <Row gutter={[16,16]}>
-        <button className="btn btn-mwd">
+        <button className="btn btn-mwd" >
           <PlusCircleOutlined /> Add author
         </button>
         <button className="btn btn-mwd">
@@ -23,12 +24,14 @@ const Author:React.FC = props =>{
         <div className="MWD-table-container">
           <table className="MWD-table">
             <thead>
-              <th>SN</th>
-              <th>Avatar</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Mangas</th>
-              <th>Actions</th>
+              <tr>
+                <th>SN</th>
+                <th>Avatar</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mangas</th>
+                <th>Actions</th>
+              </tr>
             </thead>
             <tbody>
             <tr>
