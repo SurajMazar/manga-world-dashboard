@@ -41,7 +41,7 @@ export const login = (formData:FormData)=> {
       if(e.response){
         const error = e?.response?.data?.data;
         dispatch(loginFail(error));
-        message.error(error?.message)
+        message.error(error?.errors)
       }
     }
   }
