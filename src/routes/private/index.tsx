@@ -22,7 +22,8 @@ const PrivateLayout:React.FC<PLinterface> = props =>{
     layout:Layout,
     component:RouterComponent,
     path,
-    exact
+    exact,
+    
   } = props
 
   const authenticated = useSelector((state:state)=>state.auth.authenticated)

@@ -1,11 +1,10 @@
 import React from 'react'
 import {Switch,withRouter} from 'react-router-dom'
 
-import {
-AsyncLogin,
-AsyncDashboard,
-AsyncAuthor,
-} from './asyncComponents'
+import Login from '../Login';
+import Dashboard from '../Dashboard';
+import Author from '../Author';
+import Genre from '../Genre';
 
 import PublicRoute from '../../routes/public'
 import PublicLayout from '../../layouts/public';// public layout
@@ -16,9 +15,10 @@ function App(){
   return(
     <>
     <Switch>
-      <PublicRoute path='/login' exact layout={PublicLayout} component={AsyncLogin}/>
-      <PrivateRoute path='/' exact layout={PrivateLayout} component={AsyncDashboard}/>
-      <PrivateRoute path='/authors' exact layout={PrivateLayout} component={AsyncAuthor}/>
+      <PublicRoute path='/login' exact layout={PublicLayout} component={Login}/>
+      <PrivateRoute path='/' exact layout={PrivateLayout} component={Dashboard}/>
+      <PrivateRoute path='/authors' exact layout={PrivateLayout} component={Author}/>
+      <PrivateRoute path='/genres' exact layout={PrivateLayout} component={Genre}/>
     </Switch>
     </>
   )

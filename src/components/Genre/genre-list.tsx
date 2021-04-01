@@ -1,24 +1,10 @@
 import React from 'react';
 import {Row} from 'antd';
-import {
-  PlusCircleOutlined,
-  ClearOutlined,
-  EditOutlined
-} from '@ant-design/icons';
+import {EditOutlined,ClearOutlined} from '@ant-design/icons'; 
 
-const Author:React.FC = props =>{
-
+const GenreList:React.FC = props => {
   return(
-    <section className="section-container-2">
-      <Row gutter={[16,16]}>
-        <button className="btn btn-mwd" >
-          <PlusCircleOutlined /> Add author
-        </button>
-        <button className="btn btn-mwd">
-        <ClearOutlined />Trash
-        </button>
-      </Row>
-
+    <>
       {/* // author's table */}
       <Row gutter={[16,16]} className="section-break-1">
         <div className="MWD-table-container">
@@ -57,8 +43,8 @@ const Author:React.FC = props =>{
         
       </Row>
       {/* end author's table */}
-    </section>
-  )
+    </>
+  );
 }
 
-export default Author
+export default GenreList;

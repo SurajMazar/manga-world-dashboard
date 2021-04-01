@@ -43,7 +43,7 @@ const HeaderComponent = ()=>{
     
 
   const userMenu = (
-    <Menu style={{borderRight:'none'}}>
+    <Menu style={{borderRight:'none'}} className='MWD_sidebar-nav'>
       <Menu.Item key="1" icon={<SmileOutlined />}>Profile</Menu.Item>
       <Menu.Item key="2" icon={<PoweroffOutlined/>}
         onClick={logout}

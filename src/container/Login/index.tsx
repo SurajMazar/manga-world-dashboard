@@ -35,7 +35,7 @@ const LoginContainer:React.FC =  props =>{
   
   return(
     <Row className="w-100 justify-content-center login-wrapper">
-      <Col lg={8} md={12} xs={24}>
+      <Col lg={6} md={12} xs={24}>
         <div className="login-signup-form">
           <h4>Welcome Back</h4>
           <Form
