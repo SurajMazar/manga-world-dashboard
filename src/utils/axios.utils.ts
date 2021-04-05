@@ -8,18 +8,19 @@ export const basehttp  = (multipart:boolean = false) => {
 
   const token = getLocalStorage('token');
 
-  const multipartHeader = {
+  const header = {
     'Accept':'*/*',
-    'content-type':'multipart/form-data',
     'Authorization':token?'Bearer '+token.toString():'',
     'access-control-allow-origin': '*'
+  }
+  const multipartHeader = {
+    ...header,
+    'content-type':'multipart/form-data',
   };
 
   const normalHeader = {
-    'Accept':'*/*',
+    ...header,
     'content-type':'application/json',
-    'Authorization':token?'Bearer '+token.toString():'',
-    'access-control-allow-origin': '*'
   }
 
   const instance = axios.create({

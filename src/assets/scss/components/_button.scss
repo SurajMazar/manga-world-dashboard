@@ -4,12 +4,13 @@
   border-radius:1.25rem;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  outline:none !important;
 }
 
 
 .btn-mwd{
-  color:$text-white;
-  background-color: $primary-color;
+  color:$text-white !important;
+  background-color: $primary-color !important;
   border:none;
   margin-right:0.5rem;
   &:hover{
