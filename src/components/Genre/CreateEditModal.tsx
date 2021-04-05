@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Genre } from '../../models/genre.model';
 import {Modal,Form,Input,Button} from 'antd';
 import {CheckCircleOutlined} from '@ant-design/icons';
 import {slugGenerator,setFormdata} from '../../utils/common.utils';
 import { useDispatch, useSelector } from 'react-redux';
-import {createGenre as CG} from '../../store/services/genre.services';
+import {createGenre as CG,updateGenre as UG} from '../../store/services/genre.services';
 import Loader from '../common/loaderPrimary';
 
 const {TextArea} = Input;
@@ -44,7 +44,7 @@ const CreateEditModal:React.FC<props>= props =>{
 
   React.useEffect(()=>{
     if(data){
-      form.setFieldsValue(data)
+      form.setFieldsValue(data);
     }else{
       form.resetFields();
     }
@@ -67,14 +67,16 @@ const CreateEditModal:React.FC<props>= props =>{
 
 
   // create update function
-  const createEditGenre = useCallback((values)=>{
+  const createEditGenre = (values:Genre)=>{
     const Fd = setFormdata(values);
-    if(!editMode){
-      dispatch(CG(Fd,closeModal));
-    }else{
-      console.log(Fd)
-    }
-  },[dispatch]); //eslint-disable-line
+    dispatch(CG(Fd,closeModal));
+  }; //eslint-disable-line
+
+  const updateGenre =(values:Genre)=>{
+    const Fd = setFormdata(values);
+    // console.log(data?.id);
+    dispatch(UG(Fd,data?.id,closeModal));
+  } //eslint-disable-line
 
 
 
@@ -103,7 +105,7 @@ const CreateEditModal:React.FC<props>= props =>{
         className="mwd-backend-form"
         form={form}
         id="manga-world-dashboard-genre-form"
-        onFinish={createEditGenre}
+        onFinish={editMode?updateGenre:createEditGenre}
       >
         <Form.Item
           label="Genre name"

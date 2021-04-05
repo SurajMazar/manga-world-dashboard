@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {Genre} from '../../models/genre.model';
-
+import {updateObjectInArray} from '../../utils/common.utils';
 interface state{
   genres:Genre[],
   loadingGenre:boolean,
@@ -53,6 +53,12 @@ const GenreSlice = createSlice({
       state.genres = [actions.payload].concat(state.genres);
     },
 
+    genreUpdateSuccess(state,actions){
+      state.createEditLoading = false;
+      const genres = updateObjectInArray(state.genres,actions.payload);
+      state.genres = genres
+    },
+
     genreCreateEditFail(state,actions){
       state.createEditLoading = false;
       state.createEditError = actions.payload;
@@ -70,6 +76,7 @@ genreFetchFail,
 genreCreateEditRequest,
 genreCreateEditFail,
 genreCreateSuccess,
+genreUpdateSuccess,
 
 } = GenreSlice.actions;
 

@@ -7,6 +7,7 @@ import {
   genreCreateEditFail,
   genreCreateEditRequest,
   genreCreateSuccess,
+  genreUpdateSuccess,
   
 } from '../actionsReducer/genre.actionreducer';
 import { basehttp } from "../../utils/axios.utils";
@@ -42,6 +43,24 @@ export const createGenre = (formData:FormData, closeModal:()=>void|null) =>{
       if(closeModal){
         closeModal();
       } 
+      message.success("Genre created sucessfully");
+    }catch(e){
+      dispatch(genreCreateEditFail(e.response));
+    }
+  }
+}
+
+
+export const updateGenre = (formData:FormData, id:number|undefined ,closeModal:()=>void|null) =>{
+  return async (dispatch:Dispatch) =>{
+    dispatch(genreCreateEditRequest());
+    try{
+      const response = await basehttp().put('api/administration/genres/update/'+id,formData);
+      dispatch(genreUpdateSuccess(response.data.data));
+      if(closeModal){
+        closeModal();
+      } 
+      message.success("Genre updated sucessfully");
     }catch(e){
       dispatch(genreCreateEditFail(e.response));
     }

@@ -27,3 +27,9 @@ export const setFormdata = (data:any) =>{
   }
   return data;
 }
+
+export const updateObjectInArray = (array:any,object:any) =>{
+  let oldIndex = array.findIndex(((item:any)=>item.id === object.id));
+  array[oldIndex] = object
+  return array;
+}
