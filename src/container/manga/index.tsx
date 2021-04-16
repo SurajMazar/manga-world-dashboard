@@ -1,9 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import {Row} from 'antd'; 
 import {PlusCircleOutlined,ClearOutlined} from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import {loadMangas} from '../../store/services/manga.services';
+
+
 
 const Manga:React.FC = (props) =>{
+  const dispatch = useDispatch();
+
+  const lM = () =>{
+    dispatch(loadMangas())
+  }
+
+  useEffect(() => {
+    lM();
+  });// eslint-disable-line
+
+
   return(
     <div className="section-container-2">
       <Row>

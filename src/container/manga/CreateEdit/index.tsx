@@ -81,9 +81,10 @@ const MangaCreateEdit:React.FC = () =>{
       excerpt:values.excerpt || '',
       description:values.description || '',
       published:values.published || '',
-      published_date:moment(values.publish_date).format('YYYY-MM-DD'),
+      publish_date:moment(values.publish_date).format('YYYY-MM-DD'),
       cover_picture:coverImage?.file || null,
       thumbnail:thumbnail?.file || null,
+      status:values.status
     })
     dispatch(createManga(form));
   }
