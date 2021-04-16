@@ -1,0 +1,10 @@
+.btn-anchor{
+  border:none !important;
+  background: transparent;
+  color:$primary-black;
+  cursor:pointer;
+  outline: none !important;
+  &:hover{
+    color:$primary-color;
+  }
+}

@@ -1,12 +1,46 @@
 .mwd-backend-form{
-  input,textarea{
+  input,textarea,.ant-select-selector,.ant-picker{
     &:hover{
-      border-color:$primary-color;
+      border-color:$primary-color !important;
       box-shadow:  0 0 0 2px rgba($primary-color-light, 0.2) !important;
     }
     &:focus{
-      border-color:$primary-color;
+      border-color:$primary-color !important;
       box-shadow:  0 0 0 2px rgba($primary-color-light, 0.2) !important;
     }
   }
+  .ant-picker{
+    input{
+      box-shadow:none !important;
+    }
+  }
+
+  .preview-image-wrapper{
+    position:relative;
+    .preview-img{
+      max-width:100%;
+      height:175px;
+    }
+    .anticon{
+      position:absolute;
+      top:0;
+      right:0;
+      box-shadow: 0 0 10px white;
+      color:white;
+      cursor: pointer;
+      background: $primary-color;
+      border-radius:50%;
+      padding:0.3rem;
+      font-size: 1rem;
+    }
+  }
+
+  .ant-upload-list-item{
+    display:none !important;
+  }
+
+  .ant-switch-checked {
+    background-color:$primary-color !important;
+  }
 }
+

@@ -58,7 +58,7 @@ const LoginContainer:React.FC =  props =>{
 
             <Form.Item
               name="password"
-              rules={[{ required: true, message: 'Please input your password!' }]}
+              rules={[{ required: true, message: 'Please enter your password!' }]}
             >
               <Input.Password 
                 placeholder="Password"

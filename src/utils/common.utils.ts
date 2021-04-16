@@ -19,13 +19,11 @@ export const slugGenerator = (text:string) =>{
 // formData helper
 
 export const setFormdata = (data:any) =>{
-  if(data){
-    const formData = new FormData();
-    Object.keys(data).forEach(key=>{
-      formData.append(key,data[key]);
-    })
-  }
-  return data;
+  const formData = new FormData();
+  Object.keys(data).forEach(key=>{
+    formData.append(key,data[key]);
+  })
+  return formData;
 }
 
 export const updateObjectInArray = (array:any,object:any) =>{
@@ -33,3 +31,11 @@ export const updateObjectInArray = (array:any,object:any) =>{
   array[oldIndex] = object
   return array;
 }
+
+
+export const dummyRequest = (data:any) => {
+  const { onSuccess } = data;
+  setTimeout(() => {
+    onSuccess("ok");
+  }, 0);
+};

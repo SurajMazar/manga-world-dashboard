@@ -11,6 +11,7 @@ import { Genre as genre} from '../../models/genre.model';
 import {pagemeta} from '../../models/pagemeta.model';
 import CreateEditModal from '../../components/Genre/CreateEditModal';
 import Pagination from '../../components/common/pagination';
+
 interface state{
   genre:{
     genres:genre[],

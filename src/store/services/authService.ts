@@ -16,6 +16,7 @@ import {setLocalstorage} from '../../utils/localstorage.utils';
 import { message } from 'antd';
 import {push} from 'connected-react-router'
 
+
 export const login = (formData:FormData)=> {
   return async (dispatch:Dispatch) =>{
     dispatch(loginRequest());
@@ -36,7 +37,6 @@ export const login = (formData:FormData)=> {
           message.error('Sorry but you are not an administrator');
         }
       }
-
     }catch(e){
       if(e.response){
         const error = e?.response?.data?.data;

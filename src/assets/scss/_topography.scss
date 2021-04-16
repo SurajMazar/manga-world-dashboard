@@ -1,0 +1,55 @@
+$colors:(
+  'primary':$primary-color,
+  'black':$primary-black,
+);
+
+$font-sizes: (
+  "10": 0.7143rem,
+  "11": 0.7857rem,
+  "12": 0.8571rem,
+  "13": 0.9286rem,
+  "14": 1rem,
+  "15": 1.071rem,
+  "16": 1.143rem,
+  "18": 1.286rem,
+  "20": 1.429rem,
+  "22": 1.571rem,
+  "24": 1.714rem,
+  "26": 1.857rem,
+  "28": 2rem,
+  "30": 2.143rem,
+  "32": 2.286rem,
+  "34": 2.429rem,
+  "36": 2.571rem,
+  "38": 2.714rem,
+  "40": 2.857rem,
+);
+
+
+
+@each $i, $color in $colors{
+
+  .text-#{$i}{
+    color:$color !important;
+  }
+
+
+  @each $j, $size in $font-sizes {
+    // for font -sizes
+    .text-#{$j} {
+      font-size: $size !important;
+      color: $primary-black;
+      margin-top: 0;
+      margin-bottom: 0.2 * $size !important;
+    }
+
+    .text-#{$j}-#{$i}{
+      font-size: $size !important;
+      color: $color !important;
+      margin-top: 0;
+      margin-bottom: 0.2 * $size !important;
+    }
+
+  }
+
+}

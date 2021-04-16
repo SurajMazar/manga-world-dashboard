@@ -14,13 +14,13 @@ export const basehttp  = (multipart:boolean = false) => {
     'access-control-allow-origin': '*'
   }
   const multipartHeader = {
+    'Content-Type': 'multipart/form-data',
     ...header,
-    'content-type':'multipart/form-data',
   };
 
   const normalHeader = {
+    'Content-Type':'application/json',
     ...header,
-    'content-type':'application/json',
   }
 
   const instance = axios.create({

@@ -1,12 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {Genre} from '../../models/genre.model';
 import {updateObjectInArray} from '../../utils/common.utils';
+
 interface state{
   genres:Genre[],
   loadingGenre:boolean,
   genreErrors:{},
   genrePageMeta:{},
-
   createEditLoading:boolean,
   createEditError:{}|null
 }
