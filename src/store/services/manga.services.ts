@@ -9,27 +9,33 @@ import {
 
   createMangaRequest,
   createMangaSuccess,
-  createMangaFail
+  createMangaFail,
+
+  setEditingManga,
+  removeEditingManga,
 
 } from '../actionsReducer/manga.actionreducer';
+import history from "../../utils/history";
+import {message} from "antd";
+import MangaModel from "../../models/manga.model";
+import params from "../../models/params.model";
+import {paramsUrl} from "../../utils/common.utils";
 
 
-export const loadMangas = () =>{
+export const loadMangas = (params:params) =>{
+
   return async(dispatch:Dispatch) =>{
     dispatch(fetchMangaRequest());
     try{
-      let response = await basehttp().get('api/administration/mangas');
+      let url = 'api/administration/mangas';
+      url = paramsUrl(url,params);
+      let response = await basehttp().get(url);
       const data = response.data.data;
       const payload ={
         mangas:data.mangas,
         pageMeta:data.pageMeta
       }
-      // let data = {
-      //   mangas:response.data.data.mangas || [],
-      //   pageMeta:response.data.date.pageMeta || {}
-      // };
       dispatch(fetchMangaSuccess(payload));
-
       console.log(payload)
     }catch(e){
       if(e?.response?.data){
@@ -47,12 +53,28 @@ export const createManga = (formdata:FormData) =>{
     try{
       const response =  await basehttp().post('/api/administration/mangas/store',formdata);
       dispatch(createMangaSuccess(response.data.data));
+      message.success("New manga created successfully!")
+      history.push('/mangas');
     }catch(e){
       if(e.response.data){
         dispatch(createMangaFail(e.response.data));
       }else{
         dispatch(createMangaFail("Server error"));
       }
+      message.error("Some problem has occurred while creating the manga!");
     }
+  }
+}
+
+
+export const setEM = (manga:MangaModel) =>{
+  return (dispatch:Dispatch) =>{
+    dispatch(setEditingManga(manga));
+  }
+}
+
+export const removeEM = () =>{
+  return (dispatch:Dispatch) => {
+    dispatch(removeEditingManga());
   }
 }

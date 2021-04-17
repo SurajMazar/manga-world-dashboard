@@ -1,12 +1,17 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Form,Row,Col,Input,Upload,Card,Select,Switch,DatePicker} from 'antd';
 import { slugGenerator, dummyRequest, setFormdata} from '../../../utils/common.utils';
 import { RcFile } from 'antd/lib/upload';
-import {DeleteOutlined} from '@ant-design/icons';
+import { DeleteOutlined,ArrowLeftOutlined} from '@ant-design/icons';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import {createManga} from '../../../store/services/manga.services';
 import LoadingButton from '../../../components/common/buttons/LoadingButton';
+import mangamodel from '../../../models/manga.model';
+import {useLocation} from "react-router";
+import history from "../../../utils/history";
+import {API_URL} from "../../../constant/app.config";
+import {Link} from "react-router-dom";
 
 const { TextArea } = Input;
 const {Option} = Select;
@@ -14,7 +19,8 @@ const {Option} = Select;
 
 interface state{
   manga:{
-    loadingManga:boolean
+    loadingManga:boolean,
+    editedManga:mangamodel
   }
 }
 
@@ -30,8 +36,8 @@ const MangaCreateEdit:React.FC = () =>{
     return manga;
   });
 
-  const {loadingManga}  = state;
-  // end redu state
+  const {loadingManga,editedManga}  = state;
+  // end redux state
   
   // slug helper 
   const onNameChange = (event:React.ChangeEvent<HTMLInputElement>) =>{
@@ -48,16 +54,14 @@ const MangaCreateEdit:React.FC = () =>{
     })
   }
 
-
-
   
   // image handelers
   interface file{
     url:string,
-    file:File
+    file:File|string
   }
-  const [coverImage, setCoverImage]  =  React.useState<file|null>(null);
-  const [thumbnail, setThumbnail]  =  React.useState<file|null>(null);
+  const [coverImage, setCoverImage]  =  useState<file|null>(null);
+  const [thumbnail, setThumbnail]  =  useState<file|null>(null);
 
   const imageRemover = (key:'cover'|'thumbnail') => {
     if(key=== 'cover'){
@@ -68,6 +72,36 @@ const MangaCreateEdit:React.FC = () =>{
   }
  
   // end image handlers
+
+
+  //edit mode handlers
+  const [editMode,setEditMode] = useState<boolean>(false);
+  const location = useLocation();
+
+  useEffect(()=>{
+    if(editedManga){
+      setEditMode(true);
+      // set default cover image
+      setCoverImage({
+        file: API_URL + editedManga.cover_picture,
+        url: API_URL + editedManga.cover_picture,
+      })
+
+      // set default  thumbnail
+      setThumbnail({
+        file:API_URL +editedManga.thumbnail,
+        url:API_URL +editedManga.thumbnail,
+      })
+
+    }else{
+      setEditMode(false);
+      if(location.pathname === '/mangas/edit'){
+        history.push('/mangas');
+      }
+    }
+  },[editedManga])//eslint-disable-line
+
+  // end edit mode handlers
 
 
 
@@ -93,8 +127,18 @@ const MangaCreateEdit:React.FC = () =>{
 
 return(
   <section className="section-container-2">
+
+    <Row className={"mb-2"}>
+      <Link to="/mangas">
+        <button className="btn btn-mwd">
+          <ArrowLeftOutlined/>
+          All Mangas
+        </button>
+      </Link>
+    </Row>
+
     <Col xs={24}>
-      <h3 className="text-26 mb-1">Add Manga</h3>
+      <h3 className="text-26 mb-1">{editMode?'Update':'Add'} Manga</h3>
     </Col>
 
     <Form
@@ -117,6 +161,7 @@ return(
               rules={[
                 {required:true,message:"Title is required"}
               ]}
+              initialValue={editedManga && editedManga.title}
             >
               <Input placeholder="Enter manga title" size="large" onChange={(value)=>onNameChange(value)}/>
             </Form.Item>
@@ -131,7 +176,8 @@ return(
               name="slug"
               rules={[
                 {required: true, message: 'Slug is required' },
-              ]}>
+              ]}
+              initialValue={editedManga && editedManga.slug}>
               <Input type={'text'} placeholder="slug" size="large"
                onChange={(value)=>onSlugChange(value)}/>
             </Form.Item>
@@ -144,6 +190,7 @@ return(
                 label="Published"
                 name="published"
                 valuePropName="checked"
+                initialValue={editedManga && editedManga.published}
                 >
                 <Switch/>
               </Form.Item>
@@ -152,7 +199,9 @@ return(
             <Col xs={8}>
               <Form.Item
                 label="publish Date"
-                name="publish_date">
+                name="publish_date"
+                initialValue={editedManga && moment(editedManga.publish_date)}
+              >
                 <DatePicker size="large"/>
               </Form.Item>
             </Col>
@@ -164,6 +213,9 @@ return(
                 rules={[
                   {required: true, message: 'Please set a status' },
                 ]}
+                initialValue={
+                  editedManga && editedManga.status
+                }
               >
                 <Select placeholder="Select status" size="large">
                   <Option key="ongoing" value="on going">
@@ -184,6 +236,9 @@ return(
             <Form.Item
               label="Excerpt"
               name="excerpt"
+              initialValue={
+                editedManga && editedManga.excerpt
+              }
             >
               <TextArea  placeholder="write something..."/>
             </Form.Item>
@@ -195,6 +250,9 @@ return(
             <Form.Item
               label="Description"
               name="description"
+              initialValue={
+                editedManga && editedManga.description
+              }
             >
               <TextArea  placeholder="Manga description..." rows={10}/>
             </Form.Item>
@@ -228,9 +286,9 @@ return(
                 }}
                 customRequest={dummyRequest}
                 multiple={false}
-                accept=".png,.jpeg,.jpg,.tif,.tiff"
+                accept=".png,.jpeg,.jpg,.tif,.tiff,.webp"
                 >
-                <button className="btn-anchor"> {thumbnail && thumbnail.url?'Change':'Set'} feature image </button>
+                <p className="btn-anchor"> {thumbnail && thumbnail.url?'Change':'Set'} feature image </p>
               </Upload>
             </Card>
           </Col>
@@ -257,9 +315,9 @@ return(
                 }}
                 customRequest={dummyRequest}
                 multiple={false}
-                accept=".png,.jpeg,.jpg,.tif,.tiff"
+                accept=".png,.jpeg,.jpg,.tif,.tiff,.webp"
                 >
-                <button className="btn-anchor"> {coverImage && coverImage.url?'Change':'Set'} cover image </button>
+                <p className="btn-anchor"> {coverImage && coverImage.url?'Change':'Set'} cover image </p>
               </Upload>
             </Card>
           </Col>
@@ -267,7 +325,7 @@ return(
           
         </Col>
 
-        <LoadingButton title="Create manga" loading={loadingManga} />
+        <LoadingButton title={`${editMode?'Update':'Add'} manga`} loading={loadingManga} />
           
 
       </Row>

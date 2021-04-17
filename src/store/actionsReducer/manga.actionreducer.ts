@@ -3,16 +3,18 @@ import Manga from '../../models/manga.model';
 
 interface state{
   loadingManga:boolean,
-  manga:Manga[]|undefined,
+  mangas:Manga[]|undefined,
   errorMangas:{}|undefined,
-  mangasPageMeta:{}|undefined
+  mangasPageMeta:{}|undefined,
+  editedManga:Manga|undefined,
 }
 
 const initialState:state = {
   loadingManga:false,
-  manga:[],
+  mangas:[],
   errorMangas:undefined,
-  mangasPageMeta:undefined
+  mangasPageMeta:{},
+  editedManga:undefined
 }
 
 const mangaSlice = createSlice({
@@ -27,7 +29,7 @@ const mangaSlice = createSlice({
 
     fetchMangaSuccess(state,action){
       state.loadingManga = false;
-      state.manga = action.payload.mangas;
+      state.mangas = action.payload.mangas;
       state.mangasPageMeta = action.payload.pageMeta;
     },
 
@@ -43,14 +45,25 @@ const mangaSlice = createSlice({
     
     createMangaSuccess(state,action){
       state.loadingManga =false;
-      state.manga = [action.payload].concat(state.manga);
+      state.mangas = [action.payload].concat(state.mangas);
     },
 
     createMangaFail(state,action){
       state.loadingManga = false;
       state.errorMangas = action.payload;
-    }
+    },
     // end create manga
+
+
+    // edit manga actions
+    setEditingManga(state,action){
+      state.editedManga = action.payload;
+    },
+
+    removeEditingManga(state){
+      state.editedManga = undefined;
+    }
+    // end edit manga actions
 
   }
 });
@@ -66,7 +79,11 @@ export const {
   //create manga actions
   createMangaFail,
   createMangaRequest,
-  createMangaSuccess
+  createMangaSuccess,
+
+  // current editing
+  setEditingManga,
+  removeEditingManga,
 } = mangaSlice.actions;
 
 

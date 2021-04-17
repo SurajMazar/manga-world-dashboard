@@ -1,5 +1,6 @@
 class MangaModel{
   constructor(
+    public id:number,
     public title:string,
     public slug:string,
     public excerpt:string,
