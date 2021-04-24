@@ -42,5 +42,25 @@
   .ant-switch-checked {
     background-color:$primary-color !important;
   }
+
+  .mwd-chapter-page{
+    position: relative;
+    .remove{
+      position: absolute;
+      top:0;
+      right:0;
+      .anticon{
+        background: white;
+        color:$primary-color;
+        border-radius: 50%;
+        font-size:25px;
+        transition: all 0.5s ease;
+        &:hover{
+          color: white;
+          background:$primary-color;
+        }
+      }
+    }
+  }
 }
 

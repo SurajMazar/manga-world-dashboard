@@ -68,7 +68,6 @@ const Manga:React.FC = (props) =>{
       </Row>
 
       <div className="section-break-2">
-        <Pagination pageMeta={mangasPageMeta} paginate={lM}/>
         <MangaList mangas={mangas} loading={loadingManga}/>
         <Pagination pageMeta={mangasPageMeta} paginate={lM}/>
       </div>

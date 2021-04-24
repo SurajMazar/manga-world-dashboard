@@ -1,19 +1,22 @@
 import { Dispatch } from 'redux';
 import { basehttp } from '../../utils/axios.utils';
 import {
-
+  
   fetchMangaFail,
   fetchMangaRequest,
   fetchMangaSuccess,
-
-
+  
   createMangaRequest,
   createMangaSuccess,
   createMangaFail,
-
+  
   setEditingManga,
   removeEditingManga,
-
+  
+  updateMangaRequest,
+  updateMangaSuccess,
+  updateMangaFail
+  
 } from '../actionsReducer/manga.actionreducer';
 import history from "../../utils/history";
 import {message} from "antd";
@@ -36,7 +39,7 @@ export const loadMangas = (params:params) =>{
         pageMeta:data.pageMeta
       }
       dispatch(fetchMangaSuccess(payload));
-      console.log(payload)
+      // console.log(payload)
     }catch(e){
       if(e?.response?.data){
         dispatch(fetchMangaFail(e.response.data));
@@ -56,7 +59,7 @@ export const createManga = (formdata:FormData) =>{
       message.success("New manga created successfully!")
       history.push('/mangas');
     }catch(e){
-      if(e.response.data){
+      if(e && e.response && e.response.data){
         dispatch(createMangaFail(e.response.data));
       }else{
         dispatch(createMangaFail("Server error"));
@@ -76,5 +79,24 @@ export const setEM = (manga:MangaModel) =>{
 export const removeEM = () =>{
   return (dispatch:Dispatch) => {
     dispatch(removeEditingManga());
+  }
+}
+
+
+export const updateManga = (formData:FormData,id:number)=>{
+  return async (dispatch:Dispatch) =>{
+    dispatch(updateMangaRequest());
+    try{
+      const response = await basehttp().put(`api/administration/mangas/update/${id}`,formData);
+      dispatch(updateMangaSuccess(response.data.data));
+      message.success("Updated successfully!")
+    }catch (e) {
+      if(e && e.response && e.response.data){
+        dispatch(updateMangaFail(e.response.data));
+      }else{
+        dispatch(updateMangaFail("Server error"));
+      }
+      message.error("Some problem has occurred while updating the manga!");
+    }
   }
 }

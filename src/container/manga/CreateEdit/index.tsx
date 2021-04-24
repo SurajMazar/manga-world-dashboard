@@ -5,13 +5,14 @@ import { RcFile } from 'antd/lib/upload';
 import { DeleteOutlined,ArrowLeftOutlined} from '@ant-design/icons';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import {createManga} from '../../../store/services/manga.services';
+import {createManga, updateManga} from '../../../store/services/manga.services';
 import LoadingButton from '../../../components/common/buttons/LoadingButton';
 import mangamodel from '../../../models/manga.model';
 import {useLocation} from "react-router";
 import history from "../../../utils/history";
 import {API_URL} from "../../../constant/app.config";
 import {Link} from "react-router-dom";
+import Chapter from "../../Chapters";
 
 const { TextArea } = Input;
 const {Option} = Select;
@@ -60,6 +61,7 @@ const MangaCreateEdit:React.FC = () =>{
     url:string,
     file:File|string
   }
+  
   const [coverImage, setCoverImage]  =  useState<file|null>(null);
   const [thumbnail, setThumbnail]  =  useState<file|null>(null);
 
@@ -83,15 +85,15 @@ const MangaCreateEdit:React.FC = () =>{
       setEditMode(true);
       // set default cover image
       setCoverImage({
-        file: API_URL + editedManga.cover_picture,
+        file:editedManga.cover_picture,
         url: API_URL + editedManga.cover_picture,
-      })
+      });
 
       // set default  thumbnail
       setThumbnail({
-        file:API_URL +editedManga.thumbnail,
-        url:API_URL +editedManga.thumbnail,
-      })
+        file:editedManga.thumbnail,
+        url:API_URL + editedManga.thumbnail,
+      });
 
     }else{
       setEditMode(false);
@@ -100,9 +102,10 @@ const MangaCreateEdit:React.FC = () =>{
       }
     }
   },[editedManga])//eslint-disable-line
+  
+  
 
   // end edit mode handlers
-
 
 
   // on formSubmit 
@@ -120,7 +123,11 @@ const MangaCreateEdit:React.FC = () =>{
       thumbnail:thumbnail?.file || null,
       status:values.status
     })
-    dispatch(createManga(form));
+    if(editMode){
+      dispatch(updateManga(form,editedManga.id));
+    }else{
+      dispatch(createManga(form));
+    }
   }
 
 
@@ -185,7 +192,7 @@ return(
 
 
           <div className="d-flex">
-            <Col xs={8}>
+            <Col lg={8} md={12} xs={24}>
               <Form.Item
                 label="Published"
                 name="published"
@@ -196,17 +203,20 @@ return(
               </Form.Item>
             </Col>
 
-            <Col xs={8}>
+            <Col lg={8} md={12} xs={24}>
               <Form.Item
                 label="publish Date"
                 name="publish_date"
                 initialValue={editedManga && moment(editedManga.publish_date)}
+                rules={[
+                  {required: true, message: 'Please set a publish date!' },
+                ]}
               >
                 <DatePicker size="large"/>
               </Form.Item>
             </Col>
 
-            <Col xs={8}>
+            <Col lg={8} md={12} xs={24}>
               <Form.Item
                 label="Status"
                 name="status"
@@ -330,6 +340,7 @@ return(
 
       </Row>
     </Form>
+    {editMode?<Chapter/>:''}
   </section>
   );
 }

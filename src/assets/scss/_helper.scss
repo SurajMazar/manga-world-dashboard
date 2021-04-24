@@ -1,106 +1,111 @@
-
-
 /**
 1.Width height
 **/
 
 // 1. Width height
-.w-100{
-  width:100% !important;
+.w-100 {
+  width: 100% !important;
 }
 
 
 //2 alignment
-.justify-content-center{
+.justify-content-center {
   justify-content: center;
 }
 
 //alignment
-.text-center{
+.text-center {
   text-align: center !important;
 }
 
 
-
-$scale : (
-  '05':1,
-  '1':2,
-  '15':3,
-  '2':4,
-  '25':5,
-  '3':6,
-  '35':7,
+$scale: (
+        '05':1,
+        '1':2,
+        '15':3,
+        '2':4,
+        '25':5,
+        '3':6,
+        '35':7,
 );
 
-@each $i , $m in $scale{
+
+.ml-auto{
+  margin-left: auto !important;
+}
+@each $i, $m in $scale {
 
   // margin related
-  .mt-#{$i}{
-    margin-top:0.5em * $m !important;
+  .mt-#{$i} {
+    margin-top: 0.5em * $m !important;
   }
 
-  .mb-#{$i}{
-    margin-bottom:0.5em * $m !important;
+  .mb-#{$i} {
+    margin-bottom: 0.5em * $m !important;
   }
 
-  .mr-#{$i}{
-    margin-right:0.5em * $m !important;
+  .mr-#{$i} {
+    margin-right: 0.5em * $m !important;
   }
 
-  .ml-#{$i}{
-    margin-left:0.5em * $m !important;
+  .ml-#{$i} {
+    margin-left: 0.5em * $m !important;
   }
 
-  .m-#{$i}{
-    margin:0.5em * $m !important;
+  .m-#{$i} {
+    margin: 0.5em * $m !important;
   }
 
-  .mtb-#{$i}{
-    margin:0.5em * $m  0 !important;
+  .mtb-#{$i} {
+    margin: 0.5em * $m 0 !important;
   }
 
-  .mrl-#{$i}{
-    margin:0 0.5em * $m !important;
+  .mrl-#{$i} {
+    margin: 0 0.5em * $m !important;
   }
-
 
 
   // padding related
 
 
-  .pt-#{$i}{
-    padding-top:0.5em * $m !important;
+  .pt-#{$i} {
+    padding-top: 0.5em * $m !important;
   }
 
-  .pb-#{$i}{
-    padding-bottom:0.5em * $m !important;
+  .pb-#{$i} {
+    padding-bottom: 0.5em * $m !important;
   }
 
-  .pr-#{$i}{
-    padding-right:0.5em * $m !important;
+  .pr-#{$i} {
+    padding-right: 0.5em * $m !important;
   }
 
-  .pl-#{$i}{
-    padding-left:0.5em * $m !important;
+  .pl-#{$i} {
+    padding-left: 0.5em * $m !important;
   }
 
-  .p-#{$i}{
-    padding:0.5em * $m !important;
+  .p-#{$i} {
+    padding: 0.5em * $m !important;
   }
 
-  .ptb-#{$i}{
-    padding:0.5em * $m  0 !important;
+  .ptb-#{$i} {
+    padding: 0.5em * $m 0 !important;
   }
 
-  .prl-#{$i}{
-    padding:0 0.5em * $m !important;
+  .prl-#{$i} {
+    padding: 0 0.5em * $m !important;
   }
   // end padding related
 
 }
 
 
-.d-flex{
+.d-flex {
   display: flex;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
+}
+
+
+.cursor-pointer{
+  cursor: pointer !important;
 }

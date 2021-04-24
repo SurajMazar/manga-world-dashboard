@@ -97,11 +97,6 @@ return(
       </button>
     </Row>
 
-    <Pagination
-      paginate = {loadGenre}
-      pageMeta = {genrePageMeta}
-      />
-
     <GenreList
       genres={genres}
       loading={loadingGenre}

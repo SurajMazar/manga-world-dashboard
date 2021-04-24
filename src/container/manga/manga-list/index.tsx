@@ -7,6 +7,7 @@ import {EditOutlined} from "@ant-design/icons";
 import {useDispatch} from "react-redux";
 import {setEM} from "../../../store/services/manga.services";
 import {API_URL} from "../../../constant/app.config";
+import {returnLimitedWord} from "../../../utils/common.utils";
 
 interface props{
     mangas:MangaModel[],
@@ -52,7 +53,7 @@ const MangaList:React.FC<props> = (props) =>{
                                         style={{height:'100px'}}
                                     />
                                 </td>
-                                <td>{manga.title}</td>
+                                <td title={manga.title}>{returnLimitedWord(manga.title,20)}</td>
                                 <td>Genre</td>
                                 <td>author</td>
                                 <td>publish status</td>
