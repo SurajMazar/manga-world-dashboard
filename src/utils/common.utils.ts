@@ -18,6 +18,17 @@ export const slugGenerator = (text:string) =>{
 }
 
 
+// changes index of element in js
+export const arrayElementSwap = (array:Array<any>,a:number,b:number)=>{
+  if(array.length){
+    let i1 = array[a];
+    let i2 = array[b];
+    array[a] = i2;
+    array[b] = i1;
+  }
+  return array;
+}
+
 // formData helper
 export const setFormdata = (data:any) =>{
   const formData = new FormData();

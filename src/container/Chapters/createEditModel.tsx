@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import {Card, Col, DatePicker, Form, Input, Modal, Popconfirm, Row, Switch, Upload} from "antd";
-import {dummyRequest} from "../../utils/common.utils";
+import { dummyRequest} from "../../utils/common.utils";
 import {RcFile} from "antd/es/upload";
 import {CloseCircleOutlined} from "@ant-design/icons";
+import {SortableContainer, SortableElement} from 'react-sortable-hoc';
+import arrayMove from 'array-move';
 
 interface propsInterface {
   visible: boolean,
   closeModal: () => void,
 }
-
 
 const ChapterCreateEdit: React.FC<propsInterface> = props => {
   
@@ -49,6 +50,38 @@ const ChapterCreateEdit: React.FC<propsInterface> = props => {
   const clearPageByItem = (item:chapterPages)=>{
     let updatedPages = pages.filter(page=>page !== item);
     setPages(updatedPages);
+  }
+  
+  
+  const PageElement = SortableElement(({page}:any)=>(
+    <Col xs={12} lg={6} md={8} className={"mwd-chapter-page"} style={{zIndex:1005}}>
+      <img src={page.url} style={{
+        width:'100%',
+        objectFit:'cover',
+      }} alt="" />
+    
+      <div className="remove">
+        <Popconfirm placement="top" title={"Are you sure want to remove this page?"}
+                    onConfirm={()=>clearPageByItem(page)} okText="Yes" cancelText="No">
+          <CloseCircleOutlined title={"Remove page"}/>
+        </Popconfirm>
+      </div>
+    </Col>
+  ));
+  
+  
+  const PagesContainer = SortableContainer(({pages}:any)=>(
+    <div className={"d-flex"} style={{flexWrap:'wrap',position:'relative',zIndex:99999}}>
+      {pages.map((page: any, index: any) => (
+        <PageElement page={page} key={`item-${page.url}`} index={index} />
+      ))}
+    </div>
+  ));
+  
+  
+  const onSortEnd = ({oldIndex,newIndex}:any)=>{
+    let array = arrayMove(pages,oldIndex,newIndex);
+    setPages(array);
   }
   
   return (
@@ -143,25 +176,9 @@ const ChapterCreateEdit: React.FC<propsInterface> = props => {
   
               <Col xs={24}>
                 <Card title="Pages" bordered={true} style={{textAlign:'center'}}>
-                  <div className={"d-flex"} style={{flexWrap:'wrap'}}>
-                    {pages && pages.length?
-                      pages.map((page,id)=>(
-                        <Col xs={12} lg={6} md={8} key={id} className={"mwd-chapter-page"}>
-                          <img src={page.url} style={{
-                            width:'100%',
-                            objectFit:'cover'
-                          }} alt=""/>
-                          
-                          <div className="remove">
-                            <Popconfirm placement="top" title={"Are you sure want to remove this page?"}
-                                        onConfirm={()=>clearPageByItem(page)} okText="Yes" cancelText="No">
-                              <CloseCircleOutlined title={"Remove page"}/>
-                            </Popconfirm>
-                          </div>
-                        </Col>
-                      ))
-                      :""}
-                  </div>
+                  {pages && pages.length?
+                    <PagesContainer pages={pages} onSortEnd={onSortEnd} axis={"xyz"} pressDelay={150} />
+                    :""}
                   <Upload
                     {...fileProps}
                     customRequest={dummyRequest}

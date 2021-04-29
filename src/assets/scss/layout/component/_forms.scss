@@ -45,8 +45,15 @@
 
   .mwd-chapter-page{
     position: relative;
+    z-index:999;
+    img{
+      cursor: pointer;
+      position: relative;
+      z-index:999;
+    }
     .remove{
       position: absolute;
+      z-index:99999;
       top:0;
       right:0;
       .anticon{
