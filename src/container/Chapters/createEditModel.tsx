@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Card, Col, DatePicker, Form, Input, Modal, Popconfirm, Row, Switch, Upload} from "antd";
-import { dummyRequest} from "../../utils/common.utils";
+import { dummyRequest, slugGenerator} from "../../utils/common.utils";
 import {RcFile} from "antd/es/upload";
 import {CloseCircleOutlined} from "@ant-design/icons";
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
@@ -61,8 +61,7 @@ const ChapterCreateEdit: React.FC<propsInterface> = props => {
       }} alt="" />
     
       <div className="remove">
-        <Popconfirm placement="top" title={"Are you sure want to remove this page?"}
-                    onConfirm={()=>clearPageByItem(page)} okText="Yes" cancelText="No">
+        <Popconfirm placement="top" title={"Are you sure want to remove this page?"} onConfirm={()=>clearPageByItem(page)} okText="Yes" cancelText="No">
           <CloseCircleOutlined title={"Remove page"}/>
         </Popconfirm>
       </div>
@@ -83,6 +82,25 @@ const ChapterCreateEdit: React.FC<propsInterface> = props => {
     let array = arrayMove(pages,oldIndex,newIndex);
     setPages(array);
   }
+
+
+
+  // slug helper 
+  const onNameChange = (event:React.ChangeEvent<HTMLInputElement>) =>{
+    const slug = slugGenerator(event.target.value)
+    form.setFieldsValue({
+      slug:slug
+    })
+  }
+
+  const onSlugChange = (event:React.ChangeEvent<HTMLInputElement>) =>{
+    const slug = slugGenerator(event.target.value)
+    form.setFieldsValue({
+      slug:slug
+    })
+  }
+
+
   
   return (
     <Modal
@@ -111,7 +129,7 @@ const ChapterCreateEdit: React.FC<propsInterface> = props => {
               {required:true,message:'Title is required!'}
             ]}
             >
-              <Input placeholder={"Enter chapter title"} size="large"/>
+              <Input placeholder={"Enter chapter title"} size="large" onChange={(value)=>onNameChange(value)}/>
             </Form.Item>
           </Col>
   
@@ -123,7 +141,7 @@ const ChapterCreateEdit: React.FC<propsInterface> = props => {
                 {required:true,message:'Slug is required!'}
               ]}
             >
-              <Input placeholder={"Enter chapter slug"} size="large"/>
+              <Input placeholder={"Enter chapter slug"} size="large" onChange={(value)=>onSlugChange(value)}/>
             </Form.Item>
           </Col>
   

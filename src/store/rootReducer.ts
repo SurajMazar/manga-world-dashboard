@@ -6,12 +6,14 @@ import {LocationState} from 'history';
 import authReducer from './actionsReducer/authActionReducer';
 import genreReducer from './actionsReducer/genre.actionreducer';
 import mangaReducer from './actionsReducer/manga.actionreducer';
+import chapterReducer from './actionsReducer/chapter.actionreducer';
 
 const rootReducer = {
   router:connectRouter(history) as Reducer<RouterState<LocationState>>, // types for connected react router
   auth:authReducer,
   genre:genreReducer,
-  manga:mangaReducer
+  manga:mangaReducer,
+  chapter:chapterReducer
 }
 
 export default rootReducer;
